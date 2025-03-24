@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "target": "ESNext",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "verbatimModuleSyntax": true
+  },
+  "include": ["."]
+}

@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "lib": ["ES2015", "ESNext"],
+    "moduleResolution": "node",
+    "module": "ESNext",
+    "target": "ES2015",
+    "esModuleInterop": true,
+    "sourceMap": false
+  },
+  "include": ["."]
+}

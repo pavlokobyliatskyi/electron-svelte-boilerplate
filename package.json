@@ -1,0 +1,140 @@
+{
+  "name": "electron-svelte-boilerplate",
+  "version": "0.0.0",
+  "description": "electron-svelte-boilerplate",
+  "author": {
+    "name": "electron-svelte-boilerplate",
+    "email": "electron-svelte-boilerplate@example.com"
+  },
+  "main": "public/dist/main/index.js",
+  "scripts": {
+    "build:prod": "npm run clean:build && cross-env NODE_ENV=production rollup -c",
+    "build:watch": "cross-env NODE_ENV=development rollup -c -w",
+    "clean:build": "rimraf public/dist",
+    "clean:dist": "rimraf dist",
+    "postinstall": "electron-builder install-app-deps",
+    "main:watch": "nodemon --quiet --watch public/dist/main --exec electron .",
+    "package": "electron-builder --publish never",
+    "start": "npm run build:prod && electron .",
+    "wait-on:build": "wait-on public/dist/main/index.js",
+    "wait-on:server": "wait-on http://localhost:3000",
+    "main:dev": "npm-run-all --sequential wait-on:build wait-on:server main:watch",
+    "start:dev": "npm-run-all --silent --sequential clean:build && npm-run-all --silent --parallel build:watch main:dev",
+    "release": "npm-run-all --sequential clean:dist build:prod package",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
+  "devDependencies": {
+    "@electron/notarize": "^3.0.1",
+    "@eslint/js": "^9.23.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/node": "^22.13.11",
+    "cross-env": "^7.0.3",
+    "electron": "^29.4.6",
+    "electron-builder": "^25.1.8",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-svelte": "^3.3.3",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.9",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.36.0",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-serve": "^3.0.0",
+    "rollup-plugin-svelte": "^7.2.2",
+    "svelte": "^5.24.1",
+    "svelte-eslint-parser": "^1.1.0",
+    "svelte-preprocess": "^6.0.3",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.27.0",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "productName": "electron-svelte-boilerplate",
+    "appId": "electron-svelte-boilerplate",
+    "asar": true,
+    "asarUnpack": [
+      "**\\*.{node,dll}"
+    ],
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "public/assets/icon.icns",
+      "target": {
+        "target": "default",
+        "arch": [
+          "arm64",
+          "x64"
+        ]
+      },
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "public/assets/entitlements.mac.plist",
+      "entitlementsInherit": "public/assets/entitlements.mac.plist",
+      "files": [
+        "public/**/*",
+        "!public/assets/icon.ico",
+        "!public/assets/icon.svg",
+        "!public/assets/icons"
+      ],
+      "notarize": false,
+      "sign": "notarize.js"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 140,
+          "y": 150
+        },
+        {
+          "x": 400,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "category": "Utility",
+      "icon": "public/assets/icons",
+      "target": [
+        "AppImage"
+      ],
+      "files": [
+        "public/**/*",
+        "!public/assets/icon.ico",
+        "!public/assets/icon.svg",
+        "!public/assets/icon.icns",
+        "!public/assets/entitlements.mac.plist"
+      ]
+    },
+    "win": {
+      "icon": "public/assets/icon.ico",
+      "target": [
+        "nsis"
+      ],
+      "files": [
+        "public/**/*",
+        "!public/assets/icon.icns",
+        "!public/assets/icon.svg",
+        "!public/assets/entitlements.mac.plist"
+      ],
+      "sign": false
+    },
+    "nsis": {
+      "deleteAppDataOnUninstall": true
+    },
+    "electronVersion": "29.4.6"
+  }
+}
